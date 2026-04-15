@@ -1,0 +1,74 @@
+# ==============================================
+# 自动化接口测试 通用 .gitignore
+# 支持：Python + Requests + Pytest + HttpRunner
+# ==============================================
+
+# 1. Python 虚拟环境（必忽略）
+venv/
+.venv/
+env/
+.env/
+virtualenv/
+pip-selfcheck.json
+
+# 2. Python 编译缓存（必忽略）
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 3. 测试报告、日志、临时文件（接口测试核心）
+reports/
+report/
+html_report/
+allure-results/
+allure-report/
+logs/
+*.log
+*.html
+temp/
+tmp/
+output/
+result/
+
+# 4. 敏感配置文件（账号、密钥、Token 绝对不能上传）
+config.ini
+config.yaml
+config.yml
+settings.py
+.env
+.secret
+credentials.json
+*.key
+*.pem
+
+# 5. 依赖锁定 / 编辑器文件
+requirements.txt.old
+Pipfile.lock
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 6. 用例数据缓存
+*.csv~
+*.xlsx~
+*.xls~
+*.json~

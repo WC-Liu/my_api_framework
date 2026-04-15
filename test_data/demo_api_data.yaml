@@ -1,0 +1,10 @@
+# GET 接口数据驱动
+get_demo:
+  - { name: "小明", age: 18, expect: "小明" }
+  - { name: "小红", age: 20, expect: "小红" }
+  - { name: "小刚", age: 22, expect: "小刚" }
+
+# POST 接口数据驱动
+post_demo:
+  - {username: "test01", password: "123456", expect: "test01"}
+  - {username: "test02", password: "654321", expect: "test02"}
