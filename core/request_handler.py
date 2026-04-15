@@ -2,6 +2,8 @@ import requests
 import json
 from common.logger import logger
 from config.settings import TOKEN_KEY, TOKEN_PREFIX
+from urllib3.util import timeout
+
 
 class RequestHandler:
     """请求封装类：统一处理所有接口请求"""
@@ -10,6 +12,7 @@ class RequestHandler:
         # 初始化会话（保持cookie/会话，提高请求效率）
         self.session = requests.Session()
         self.token = None
+
     def set_token(self ,token):
         """外部设置token"""
         self.token = token
@@ -27,10 +30,10 @@ class RequestHandler:
         method = method.upper()
 
         # 自动添加 token 到请求头
-        #if self.token:
-        #    headers = kwargs.get("headers", {})
-        #    headers[TOKEN_KEY] = TOKEN_PREFIX + self.token
-        #    kwargs["headers"] = headers
+        if self.token:
+            headers = kwargs.get("headers", {})
+            headers[TOKEN_KEY] = TOKEN_PREFIX + self.token
+            kwargs["headers"] = headers
 
         # 防止程序直接崩掉，保证测试能跑完，还能知道是哪一步出了问题。
         try:
@@ -42,7 +45,7 @@ class RequestHandler:
                 logger.info(f"请求JSON：{kwargs.get('json')}")
 
             # 发送请求
-            response = self.session.request(method, url=url, **kwargs)
+            response = self.session.request(method, url=url, timeout=10, **kwargs)
 
             # 打印日志（私有方法，给人看的，建议你别在外部调用、别修改）
             self._print_log(response)
@@ -50,13 +53,13 @@ class RequestHandler:
             return response
 
         except Exception as e:
-            print(f"请求异常：{e}")
+            print(f"请求异常：{str(e)}")     #str(e)用户可读
             raise e
 
     def _print_log(self, response):
         """打印请求日志（私有方法）"""
-        logger.info("\n===== 请求详情 =====")
-        logger.info(f"请求地址：{response.url=}")
+        logger.info("=" * 50)
+        logger.info(f"请求地址：{response.url}")
         logger.info(f"请求方法：{response.request.method}")
         logger.info(f"响应状态码：{response.status_code}")
 
@@ -65,4 +68,4 @@ class RequestHandler:
             logger.info(f"响应内容：{json.dumps(response.json(), ensure_ascii=False, indent=4)}")
         except:
             logger.info(f"响应内容：{response.text}")
-        logger.info("=============================\n")
+        logger.info("=" * 50)

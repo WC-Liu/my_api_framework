@@ -1,5 +1,5 @@
 from core.request_handler import RequestHandler
-from config.settings import BASE_URL, LOGIN_URL
+from config.settings import BASE_URL
 
 class ApiService:
     """
@@ -10,11 +10,11 @@ class ApiService:
     def __init__(self):
         self.req = RequestHandler()
 
-    def login(self, username, password):
+    def login(self, email, password):
         """登录接口，获取token"""
-        url =f"{BASE_URL}{LOGIN_URL}"
+        url =f"{BASE_URL}/post"
         json_data = {
-            "username": username,
+            "email": email,
             "password": password
         }
         return self.req.send_request("POST", url, json=json_data)
@@ -28,8 +28,3 @@ class ApiService:
         """演示 POST JSON 请求"""
         url = f"{BASE_URL}/post"
         return self.req.send_request("POST", url, json=json_data)
-
-    def post_demo_form(self, data):
-        """演示 POST 表单接口"""
-        url = f"{BASE_URL}/post"
-        return self.req.send_request("POST", url, data=data)
