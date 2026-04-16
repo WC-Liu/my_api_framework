@@ -5,8 +5,19 @@ from common.path_util import get_path
 if __name__ == '__main__':
     allure_result_path = get_path('report', 'allure_result')
 
+    # ====================== 【在这里切换用例】======================
+    # 1. 运行 FastAPI 基础用例
+    # case_path = "testcases/test_fastapi.py"
+
+    # 2. 运行 MySQL 数据库断言用例
+    case_path = "testcases/test_api_mysql.py"
+
+    # 3. 运行所有用例（正式测试）
+    # case_path = "testcases/"
+    # =================================================================
+
     pytest.main([
-        "./testcases/",
+        case_path,
         "-vs",
         f"--alluredir={allure_result_path}",
         "--clean-alluredir",
@@ -16,4 +27,4 @@ if __name__ == '__main__':
     ])
 
     # 自动打开报告（需要安装 allure 并配置环境变量）
-    os.system(f"allure serve {allure_result_path} --host 0.0.0.0")
+    os.system(f"allure serve {allure_result_path} --host 0.0.0.0 --port 8080")

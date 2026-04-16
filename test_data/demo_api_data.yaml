@@ -1,7 +1,0 @@
-get_demo:
-  - {page: 1, expect: "'page': '1'"}
-  - {page: 5, expect: "'page': '5'"}
-
-post_demo:
-  - {name: "zhangsan", job: "test", expect: "zhangsan"}
-  - {name: "lisi", job: "dev", expect: "lisi"}

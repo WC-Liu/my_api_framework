@@ -50,7 +50,7 @@ result/
 config.ini
 config.yaml
 config.yml
-settings.py
+#settings.py
 .env
 .secret
 credentials.json

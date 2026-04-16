@@ -1,0 +1,12 @@
+# 用户测试数据
+user:
+  # 创建用户数据
+  name: "王麻子"
+  age: 28
+  email: "wangmazi@test.com"
+
+  # 修改用户数据
+  update:
+    name: "赵六"
+    age: 29
+    email: "zhaoliu@test.com"

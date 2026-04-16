@@ -2,7 +2,6 @@ import requests
 import json
 from common.logger import logger
 from config.settings import TOKEN_KEY, TOKEN_PREFIX
-from urllib3.util import timeout
 
 
 class RequestHandler:
@@ -29,11 +28,12 @@ class RequestHandler:
         # 统一转大写，避免大小写问题
         method = method.upper()
 
-        # 自动添加 token 到请求头
+        # 自动添加 token 到请求头，
+        headers = kwargs.pop("headers", {})
         if self.token:
-            headers = kwargs.get("headers", {})
-            headers[TOKEN_KEY] = TOKEN_PREFIX + self.token
+            headers[TOKEN_KEY] = f"{TOKEN_PREFIX} {self.token}"
             kwargs["headers"] = headers
+            logger.info(f"新 token 已传入到请求头里面：{headers}")
 
         # 防止程序直接崩掉，保证测试能跑完，还能知道是哪一步出了问题。
         try:
@@ -43,13 +43,14 @@ class RequestHandler:
                 logger.info(f"请求参数：{kwargs.get('params')}")
             if kwargs.get("json"):
                 logger.info(f"请求JSON：{kwargs.get('json')}")
+            if kwargs.get("data"):
+                logger.info(f"参数 form：{kwargs['data']}")
 
             # 发送请求
-            response = self.session.request(method, url=url, timeout=10, **kwargs)
+            response = self.session.request(method, url, timeout=10, **kwargs)
 
-            # 打印日志（私有方法，给人看的，建议你别在外部调用、别修改）
+            # 打印日志（私有方法，给人看的，不建议在外部调用、修改）
             self._print_log(response)
-
             return response
 
         except Exception as e:
