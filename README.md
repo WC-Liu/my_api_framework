@@ -1,31 +1,49 @@
-# API 接口自动化测试框架
+# FastAPI 接口自动化测试
 
-基于 Python + pytest + requests 构建的企业级接口自动化测试框架，支持数据驱动、多环境切换、日志记录、可视化报告生成，适配 WSL2 开发环境。持续更新......
+基于 pytest + requests 实现的 FastAPI 接口自动化测试项目，专注用户模块 CRUD 接口测试，集成登录鉴权、数据库断言、Allure 可视化报告、YAML 配置管理。
 
 ## ✨ 项目特性
 
-- 分层架构设计，代码解耦、易维护、易扩展
-- YAML 数据驱动，测试用例与代码分离
-- 多环境配置一键切换（dev/test/pre）
-- 完整日志系统，支持问题定位与回溯
-- Allure 可视化测试报告
-- 使用 uv 进行依赖管理，环境快速搭建
-- 适配 WSL2 开发/运行环境
+✅ 完整用户 CRUD 接口自动化用例 
+
+✅ 登录鉴权自动获取 Token，全局关联接口
+
+✅ 数据库断言：校验接口数据与 MySQL 一致性 
+
+✅ YAML 管理测试配置、环境、用例数据 
+
+✅ Allure 可视化美化测试报告 
+
+✅ 用例失败自动重跑、日志记录 
+
+✅ 独立于被测服务，跨环境执行
 
 ```text
-api-auto-test/
-├── api/ # 业务接口封装层
-├── common/ # 公共工具类（断言、日志、工具函数）
-├── config/ # 多环境配置文件
-├── core/ # 核心请求封装（requests）
-├── datas/ # YAML 测试数据
-├── logs/ # 日志输出目录
-├── reports/ # Allure 报告目录
-├── testcases/ # 测试用例
-├── .gitignore # Git 忽略文件
-├── pyproject.toml # uv 依赖配置
-├── pytest.ini # pytest 配置
-└── README.md # 项目说明
+# my_api_framework
+
+├── api/                        # 接口服务层
+│   └── api_service.py          # 接口请求封装（对接业务接口/第三方API）
+├── common/                     # 通用工具层（核心公共方法）
+│   ├── assert_util.py          # 断言工具（结果校验封装）
+│   ├── db_util.py              # 数据库工具（MySQL/Redis等操作）
+│   ├── logger.py               # 日志工具（日志格式/输出/落地）
+│   ├── path_util.py            # 路径工具（项目绝对路径获取）
+│   └── yaml_util.py            # YAML工具（测试数据/配置读取）
+├── config/                     # 配置层
+│   └── settings.py             # 全局配置（环境变量/基础URL/超时时间等）
+├── core/                       # 核心引擎层
+│   └── request_handler.py      # 请求核心封装（requests封装/请求头/签名处理）
+├── logs/                       # 日志目录（运行日志落地）
+├── test_data/                  # 测试数据层
+│   └── user_data.yaml          # 测试数据（YAML格式存储测试用例数据）
+├── testcases/                  # 测试用例层
+│   ├── __init__.py             # 包标识
+│   ├── test_api_mysql.py       # 数据库相关测试用例
+│   └── test_fastapi.py         # FastAPI接口相关测试用例
+├── .env                        # 环境变量配置（敏感信息/环境区分）
+├── conftest.py                 # Pytest全局配置（fixture/钩子函数/环境初始化）
+├── main.py                     # 项目入口（框架启动/执行入口）
+├── pytest.ini                  # Pytest配置（用例规则/报告/插件）
 ```
 
 ## 🚀 快速开始（WSL2 + uv 环境）
