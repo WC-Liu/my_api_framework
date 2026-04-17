@@ -1,3 +1,5 @@
+from unittest import result
+
 from common.logger import logger
 from common.db_util import db
 
@@ -24,6 +26,13 @@ class AssertUtil:
         result = db.query(sql, params)
         assert len(result) > 0, "❌ 数据库数据不存在"
         logger.info("✅ 数据库数据存在")
+
+    @staticmethod
+    def assert_db_not_exist(sql, params=None):
+        """断言数据库结果已被删除"""
+        result = db.query(sql, params)
+        assert len(result) == 0, "❌ 数据库数据仍存在，删除失败！"
+        logger.info("✅ 数据库数据不存在，删除成功！")
 
     @staticmethod
     def assert_db_equal(sql, params, field, expect):

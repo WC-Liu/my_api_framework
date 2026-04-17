@@ -1,6 +1,5 @@
 import pymysql
 from common.logger import logger
-from common.path_util import get_path
 from config.settings import (
     MYSQL_HOST,
     MYSQL_PORT,
@@ -14,7 +13,6 @@ class DBUtil:
     def __init__(self):
         self.conn = None
         self.cursor = None
-        self.connect()
 
     def connect(self):
         """连接 MySQL"""
@@ -26,7 +24,8 @@ class DBUtil:
                 password=MYSQL_PASSWORD,
                 database=MYSQL_DB,
                 charset="utf8",
-                #cursorclass=pymysql.cursors.DictCursor
+                autocommit=True,
+                connect_timeout=5
             )
             # 创建数据库游标，.DictCursor返回字典
             self.cursor = self.conn.cursor(pymysql.cursors.DictCursor)

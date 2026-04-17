@@ -1,6 +1,6 @@
 # FastAPI 接口自动化测试
 
-基于 pytest + requests 实现的 FastAPI 接口自动化测试项目，专注用户模块 CRUD 接口测试，集成登录鉴权、数据库断言、Allure 可视化报告、YAML 配置管理。
+基于 pytest + requests 实现的 FastAPI 接口自动化测试项目，专注用户模块 CRUD 接口测试，集成登录鉴权、数据库断言、Allure 可视化报告、YAML 配置管理。本项目需配合仓库另一个fastapi后端使用：https://github.com/WC-Liu/test_my_api.git
 
 ## ✨ 项目特性
 
